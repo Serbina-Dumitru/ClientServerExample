@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Net;
+using System.Net.Sockets;
 using FrameworkClass;
 
 var inStream  = new Messenger();
@@ -6,10 +7,13 @@ var outStream = new Messenger();
 
 List<TcpClient> _clients = new List<TcpClient>();
 
-TcpListener listner = new TcpListener(Constants.Address,Constants.PORT);
+IPAddress ipAddr = Messenger.GetHostIpAddres();
+TcpListener listner = new TcpListener(ipAddr,Constants.PORT);
+
 listner.Start();
 
 Console.WriteLine("Server started");
+Console.WriteLine($"Started to listed on {ipAddr}");
 
 while(true){
   AcceptClients();
@@ -23,7 +27,6 @@ void AcceptClients(){
     _clients.Add(client);
     Console.WriteLine("Client Accepted" );
   }
-
 }
 
 void ReceiveMessage(){

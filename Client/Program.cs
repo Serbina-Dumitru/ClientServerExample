@@ -2,7 +2,7 @@
 using FrameworkClass;
 
 TcpClient client = new TcpClient();
-client.Connect(Constants.Address, Constants.PORT);
+client.Connect(Messenger.GetHostIpAddres(), Constants.PORT);
 Console.WriteLine("Connected to the server!");
 
 Messenger inStream  = new Messenger();
@@ -14,6 +14,7 @@ Stack<string> outgoingMessages  = new Stack<string>();
 new TaskFactory().StartNew(()=>{
   while(true){
     var msg = Console.ReadLine();
+    if(msg == null) continue;
     outgoingMessages.Push(msg);
   }
 });
